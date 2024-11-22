@@ -13,30 +13,30 @@ public class Sensors {
     public double getAverageTemp() {
         Components components = JSensors.get.components();
         List<Cpu> cpus = components.cpus;
-        if (cpus != null) {
-            int cpucount = 0;
-            double[] ctemp = new double[cpus.size()];
-            for (final Cpu cpu : cpus) {
-                ctemp[cpucount] = 0;
-                if (cpu.sensors != null) {
-                    //Print temperatures
-                    List<Temperature> temps = cpu.sensors.temperatures;
-                    int ccount = 0;
-                    for (final Temperature temp : temps) {
-                        ctemp[cpucount] += temp.value;
-                        ccount++;
-                    }
-                    ctemp[cpucount] = ctemp[cpucount] / ccount;
-                    //System.out.println("Average Temp (CPU): " + ctemp[cpucount]);
-                }
-                cpucount++;
-            }
-            double systemp = 0;
-            for (double ctems : ctemp) {
-                systemp += ctems;
-            }
-            return systemp / cpucount;
+
+        if (cpus == null || cpus.isEmpty()) {
+            return -1; // No CPUs detected
         }
-        return -1;
+
+        double totalSystemTemp = 0; // Total average temperature across all CPUs
+        int totalCpuCount = 0; // Count of CPUs with valid temperature data
+
+        for (Cpu cpu : cpus) {
+            if (cpu.sensors != null && cpu.sensors.temperatures != null) {
+                double cpuTempSum = 0; // Sum of all temperature values for the current CPU
+                int tempCount = 0; // Number of valid temperature entries for the current CPU
+
+                for (Temperature temp : cpu.sensors.temperatures) {
+                    cpuTempSum += temp.value;
+                    tempCount++;
+                }
+
+                totalSystemTemp += (cpuTempSum / tempCount); // Add the average CPU temp to the total
+                totalCpuCount++;
+            }
+        }
+
+        // Return the system average temperature, or -1 if no valid data
+        return totalCpuCount > 0 ? totalSystemTemp / totalCpuCount : -1;
     }
 }
