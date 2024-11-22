@@ -24,7 +24,7 @@ public final class Settings {
         return instance;
     }
     
-    private Settings(){
+    private Settings() {
     	config = ConfigFactory.load(ConfigFactory.parseFile(new File(Paths.get("").toAbsolutePath().toString()+ "/config/fanspeed.conf")));
         try {
             config.checkValid(ConfigFactory.defaultReference(), "dellfanspeed");
@@ -33,27 +33,27 @@ public final class Settings {
         }
     }
 
-    public Iterator<Entry<String, ConfigValue>> getall(){
+    public Iterator<Entry<String, ConfigValue>> getall() {
         return config.entrySet().iterator();
     }
     
-    public String getString(String key){
+    public String getString(String key) {
     	return config.getString(key);
     }
     
-    public Boolean getBoolean(String key){
+    public Boolean getBoolean(String key) {
     	return config.getBoolean(key);
     }
     
-    public int getInt(String key){
+    public int getInt(String key) {
     	return config.getInt(key);
     }
     
-    public List<String> getStringList(String key){
+    public List<String> getStringList(String key) {
     	return config.getStringList(key);
     }
 
-    public List<Integer> getIntList(String key){
+    public List<Integer> getIntList(String key) {
         return config.getIntList(key);
     }
 
