@@ -20,22 +20,20 @@ public class Checker implements Runnable{
         }
     }
 
+    public void run() {
+        int wantedSpeed = speedCalc(DellFanSpeed.temp.getAverageTemp());
+        if(wantedSpeed != currentSpeed){
+            DellFanSpeed.ipmi.setSpeed(wantedSpeed);
+            currentSpeed = wantedSpeed;
+        }
+    }
+
     private int speedCalc(Double temp){
         int rTemp = (int) Math.round(temp);
         int speedKey = getClosestIndex(temps,rTemp);
         int wantedSpeed = speed.get(speedKey);
         LOG.debug("Temperature (rounded): {} Wanted speed: {}",rTemp,wantedSpeed);
         return wantedSpeed;
-    }
-    public void run() {
-        int wantedSpeed = speedCalc(DellFanSpeed.temp.getAverageTemp());
-        //int wantedSpeed = speedCalc(35.3);
-        if(wantedSpeed == currentSpeed){
-            return;
-        }else{
-            DellFanSpeed.ipmi.setSpeed(wantedSpeed);
-            currentSpeed = wantedSpeed;
-        }
     }
 
     private int getClosestIndex(final List<Integer> values, int value) {

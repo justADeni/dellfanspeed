@@ -36,7 +36,7 @@ public class Ipmitool {
     }
 
     private void sendcommand(String scommand){
-        LOG.debug("IPMI Command " +command + " " + scommand);
+        LOG.debug("IPMI Command {} {}", command, scommand);
         try {
             Runtime.getRuntime().exec(command + " " + scommand);
         } catch (IOException e) {
