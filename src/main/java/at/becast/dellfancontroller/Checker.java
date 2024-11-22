@@ -4,9 +4,7 @@ import at.becast.dellfancontroller.config.Settings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.NoSuchElementException;
 
 public class Checker implements Runnable{
     private static final Logger LOG = LoggerFactory.getLogger(Checker.class);
@@ -30,12 +28,12 @@ public class Checker implements Runnable{
         return wantedspeed;
     }
     public void run() {
-        int wantedspeed = speedCalc(dellfanspeed.temp.getAverageTemp());
+        int wantedspeed = speedCalc(DellFanSpeed.temp.getAverageTemp());
         //int wantedspeed = speedCalc(35.3);
         if(wantedspeed == currentspeed){
             return;
         }else{
-            dellfanspeed.ipmi.setspeed(wantedspeed);
+            DellFanSpeed.ipmi.setspeed(wantedspeed);
             currentspeed = wantedspeed;
         }
     }

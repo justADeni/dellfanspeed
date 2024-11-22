@@ -10,13 +10,9 @@ import java.util.List;
 
 public class Sensors {
 
-    public void Sensors(){
-
-    }
-
-    public double getAverageTemp(){
-    Components components = JSensors.get.components();
-    List<Cpu> cpus = components.cpus;
+    public double getAverageTemp() {
+        Components components = JSensors.get.components();
+        List<Cpu> cpus = components.cpus;
         if (cpus != null) {
             int cpucount = 0;
             double[] ctemp = new double[cpus.size()];

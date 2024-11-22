@@ -5,14 +5,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-public class ipmitool {
-    private static final Logger LOG = LoggerFactory.getLogger(ipmitool.class);
+public class Ipmitool {
+    private static final Logger LOG = LoggerFactory.getLogger(Ipmitool.class);
     private boolean automatic = true;
     private static String command = "ipmitool";
-
-    public void ipmitool(){
-
-    }
 
     public void switchmode(boolean auto){
         if(auto == false){

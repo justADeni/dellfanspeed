@@ -6,9 +6,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class dellfanspeed{
+public class DellFanSpeed {
     private static final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-    static ipmitool ipmi = new ipmitool();
+    static Ipmitool ipmi = new Ipmitool();
     static Sensors temp = new Sensors();
     private static final Checker check = new Checker();
     private static final Settings config = Settings.getInstance();

@@ -51,7 +51,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>at.becast.dellfancontroller.dellfanspeed</mainClass>
+                            <mainClass>at.becast.dellfancontroller.DellFanSpeed</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
