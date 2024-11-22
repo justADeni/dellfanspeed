@@ -18,7 +18,7 @@ public class DellFanSpeed {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             try {
                 System.out.println("Shutting Down, resuming automatic control");
-                ipmi.switchmode(true);
+                ipmi.enableAutomaticControl(true);
                 mainThread.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();

@@ -10,7 +10,7 @@ public class Ipmitool {
     private boolean automatic = true;
     private static String command = "ipmitool";
 
-    public void switchmode(boolean auto){
+    public void enableAutomaticControl(boolean auto){
         if(auto == false){
             automatic = false;
             sendcommand("raw 0x30 0x30 0x01 0x00");
@@ -20,17 +20,17 @@ public class Ipmitool {
         }
     }
 
-    public void setspeed(int percentage){
+    public void setSpeed(int percentage){
         if(percentage <= 0){
             if(!automatic) {
-                switchmode(true);
+                enableAutomaticControl(true);
                 return;
             }
         }else if(percentage > 100){
             percentage = 100;
         }
         if(automatic){
-            switchmode(false);
+            enableAutomaticControl(false);
         }
         sendcommand("raw 0x30 0x30 0x02 0xff 0x"+String.format("%02X", percentage));
     }

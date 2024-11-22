@@ -10,7 +10,7 @@ public class Checker implements Runnable{
     private static final Logger LOG = LoggerFactory.getLogger(Checker.class);
     private List<Integer> temps;
     private List<Integer> speed;
-    private int currentspeed = 0;
+    private int currentSpeed = 0;
     Checker(){
         Settings config = Settings.getInstance();
         temps = config.getIntList("dellfanspeed.temperatures");
@@ -22,35 +22,32 @@ public class Checker implements Runnable{
 
     private int speedCalc(Double temp){
         int rTemp = (int) Math.round(temp);
-        int Speedkey = getClosestIndex(temps,rTemp);
-        int wantedspeed = speed.get(Speedkey);
-        LOG.debug("Temperature (rounded): {} Wanted speed: {}",rTemp,wantedspeed);
-        return wantedspeed;
+        int speedKey = getClosestIndex(temps,rTemp);
+        int wantedSpeed = speed.get(speedKey);
+        LOG.debug("Temperature (rounded): {} Wanted speed: {}",rTemp,wantedSpeed);
+        return wantedSpeed;
     }
     public void run() {
-        int wantedspeed = speedCalc(DellFanSpeed.temp.getAverageTemp());
-        //int wantedspeed = speedCalc(35.3);
-        if(wantedspeed == currentspeed){
+        int wantedSpeed = speedCalc(DellFanSpeed.temp.getAverageTemp());
+        //int wantedSpeed = speedCalc(35.3);
+        if(wantedSpeed == currentSpeed){
             return;
         }else{
-            DellFanSpeed.ipmi.setspeed(wantedspeed);
-            currentspeed = wantedspeed;
+            DellFanSpeed.ipmi.setSpeed(wantedSpeed);
+            currentSpeed = wantedSpeed;
         }
     }
 
     private int getClosestIndex(final List<Integer> values, int value) {
-        class Closest {
-            private Integer dif;
-            private int index = -1;
-        }
-        Closest closest = new Closest();
-        for (int i = 0; i < values.size(); ++i) {
-            final int dif = Math.abs(value - values.get(i));
-            if (closest.dif == null || dif < closest.dif) {
-                closest.index = i;
-                closest.dif = dif;
+        int distance = Math.abs(values.get(0) - value);
+        int idx = 0;
+        for (int i = 1; i < values.size(); i++) {
+            int cdistance = Math.abs(values.get(i) - value);
+            if (cdistance < distance) {
+                idx = i;
+                distance = cdistance;
             }
         }
-        return closest.index;
+        return idx;
     }
 }
